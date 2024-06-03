@@ -59,13 +59,7 @@ $pageDetails = getPageDetails($page, $conn);
     <title><?php echo $pageDetails['title']; ?> - Serwis Informacyjny</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        .article-container {
-            max-height: 400px;
-            overflow: auto;
-        }
-        .active {
-            color: green;
-        }
+
     </style>
 </head>
 <body>

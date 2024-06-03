@@ -69,54 +69,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($row["title"]); ?> - Serwis Informacyjny</title>
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        .more-content {
-            display: none;
-        }
 
-        .article-container {
-            max-height: 300px;
-            overflow: scroll;
-        }
-
-        .article-image {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            max-width: 100%;
-            height: auto;
-        }
-
-        #czytaj-dalej {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            border: none;
-        }
-
-        .comment-section {
-            margin-top: 30px;
-        }
-
-        .comment {
-            border-bottom: 1px solid #ccc;
-            padding: 10px 0;
-        }
-
-        .comment-nickname {
-            font-weight: bold;
-        }
-
-        .comment-content {
-            margin: 5px 0;
-        }
-    </style>
 </head>
 <body>
 <?php include 'layout/header.php'; ?>

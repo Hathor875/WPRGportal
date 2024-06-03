@@ -26,24 +26,5 @@ function generateAuthorThumbnail($name, $email, $id) {
 
 <style>
 
-    .article-thumbnail {
-        border: 1px solid #ccc;
-        padding: 10px;
-        margin-bottom: 10px;
-        text-decoration: none;
-        display: block;
-        color: #000;
-        border-radius: 5px; 
-    }
 
-    .article-title {
-        font-weight: bold;
-        color: #002147;
-        margin-bottom: 5px;
-    }
-
-    .article-content {
-        font-size: 14px;
-        line-height: 1.5;
-    }
 </style>
