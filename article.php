@@ -1,14 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "1234";
-$database = "myDB";
-
-$conn = new mysqli($servername, $username, $password, $database);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'db_connect.php';
 
 if (isset($_GET['id'])) {
     $article_id = $_GET['id'];
@@ -31,21 +22,14 @@ if (isset($_GET['id'])) {
     }
 
     $images = [];
-    if ($row['first_photo_id']) {
-        $sql_first_image = "SELECT image_url FROM images WHERE id='" . $row['first_photo_id'] . "'";
-        $result_first_image = $conn->query($sql_first_image);
-        if ($result_first_image->num_rows > 0) {
-            $first_image_row = $result_first_image->fetch_assoc();
-            $images[] = $first_image_row['image_url'];
-        }
-    }
-
-    if ($row['second_photo_id']) {
-        $sql_second_image = "SELECT image_url FROM images WHERE id='" . $row['second_photo_id'] . "'";
-        $result_second_image = $conn->query($sql_second_image);
-        if ($result_second_image->num_rows > 0) {
-            $second_image_row = $result_second_image->fetch_assoc();
-            $images[] = $second_image_row['image_url'];
+    $sql_images = "SELECT images.image_url FROM images 
+                   JOIN articles_images ON images.id = articles_images.image_id 
+                   WHERE articles_images.article_id='$article_id'
+                   ORDER BY images.id ASC";
+    $result_images = $conn->query($sql_images);
+    if ($result_images->num_rows > 0) {
+        while ($image_row = $result_images->fetch_assoc()) {
+            $images[] = $image_row['image_url'];
         }
     }
 
@@ -69,7 +53,6 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($row["title"]); ?> - Serwis Informacyjny</title>
     <link rel="stylesheet" href="css/style.css">
-
 </head>
 <body>
 <?php include 'layout/header.php'; ?>
@@ -81,10 +64,11 @@ $conn->close();
             if (!empty($images)) {
                 echo '<img src="' . htmlspecialchars($images[0]) . '" alt="Article Image" class="article-image">';
             }
+
             if ($full_content) {
                 echo nl2br(htmlspecialchars($row["content"]));
-                if (isset($images[1])) {
-                    echo '<img src="' . htmlspecialchars($images[1]) . '" alt="Article Image" class="article-image">';
+                for ($i = 1; $i < count($images); $i++) {
+                    echo '<img src="' . htmlspecialchars($images[$i]) . '" alt="Article Image" class="article-image">';
                 }
             } else {
                 $content = nl2br(htmlspecialchars($row["content"]));
@@ -96,17 +80,13 @@ $conn->close();
                 if ($content_length > 400) {
                     $first_quarter_content = substr($row["content"], 0, $content_length / 4);
                     echo nl2br(htmlspecialchars($first_quarter_content));
-                    echo '<span class="more-content">' . implode("<br />", $remaining_lines);
-                    if (isset($images[1])) {
-                        echo '<img src="' . htmlspecialchars($images[1]) . '" alt="Article Image" class="article-image">';
-                    }
-                    echo '</span>';
+                    echo '<span class="more-content">' . implode("<br />", $remaining_lines) . '</span>';
                     echo '<button id="czytaj-dalej" onclick="window.location.href=\'?id=' . htmlspecialchars($article_id) . '&full=true\'">czytaj dalej</button>';
                 } else {
                     echo nl2br(htmlspecialchars($row["content"]));
-                    if (isset($images[1])) {
-                        echo '<img src="' . htmlspecialchars($images[1]) . '" alt="Article Image" class="article-image">';
-                    }
+                }
+                for ($i = 1; $i < count($images); $i++) {
+                    echo '<img src="' . htmlspecialchars($images[$i]) . '" alt="Article Image" class="article-image">';
                 }
             }
             ?>

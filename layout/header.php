@@ -1,4 +1,6 @@
 <?php
+include 'db_connect.php';
+
 function getPageDetails($page, $conn) {
     $pages = [
         'index' => ['title' => 'Strona główna', 'header' => 'Witamy na stronie głównej'],
@@ -37,17 +39,6 @@ function getArticleDetails($id, $conn) {
     return null;
 }
 
-$servername = "localhost";
-$username = "root";
-$password = "1234";
-$database = "myDB";
-
-$conn = new mysqli($servername, $username, $password, $database);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
 $page = basename($_SERVER['PHP_SELF'], ".php");
 $pageDetails = getPageDetails($page, $conn);
 ?>
@@ -58,9 +49,6 @@ $pageDetails = getPageDetails($page, $conn);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageDetails['title']; ?> - Serwis Informacyjny</title>
     <link rel="stylesheet" href="css/style.css">
-    <style>
-
-    </style>
 </head>
 <body>
 <header>
@@ -73,10 +61,13 @@ $pageDetails = getPageDetails($page, $conn);
             <li><a href="/portal/memes.php" class="<?php echo $page == 'memes' ? 'active' : ''; ?>">Memy</a></li>
             <li><a href="/portal/authors.php" class="<?php echo $page == 'authors' ? 'active' : ''; ?>">Autorzy</a></li>
         </ul>
-
-
     </nav>
 </header>
 <main>
     <h2><?php echo $pageDetails['header']; ?></h2>
     <div class="article-container">
+        <!-- Content here -->
+    </div>
+</main>
+</body>
+</html>
