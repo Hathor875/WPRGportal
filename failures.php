@@ -20,7 +20,7 @@ if (!$result) {
 }
 ?>
 
-<?php include 'header.php'; ?>
+<?php include 'layout/header.php'; ?>
 
 <div class="article-container">
     <?php
@@ -34,7 +34,7 @@ if (!$result) {
     ?>
 </div>
 
-<?php include 'footer.php'; ?>
+<?php include 'layout/footer.php'; ?>
 
 <?php
 $conn->close();

@@ -1,6 +1,6 @@
 <?php
 include 'thumbnail_generator.php';
-include 'header.php';
+include 'layout/header.php';
 
 $servername = "localhost";
 $username = "root";
@@ -30,5 +30,5 @@ if ($result->num_rows > 0) {
 
 $conn->close();
 
-include 'footer.php';
+include 'layout/footer.php';
 ?>

@@ -57,7 +57,7 @@ $pageDetails = getPageDetails($page, $conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageDetails['title']; ?> - Serwis Informacyjny</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <style>
         .article-container {
             max-height: 400px;
@@ -73,12 +73,14 @@ $pageDetails = getPageDetails($page, $conn);
     <h1><?php echo $pageDetails['header']; ?></h1>
     <nav>
         <ul>
-            <li><a href="../index.php" class="<?php echo $page == 'index' ? 'active' : ''; ?>">Strona główna</a></li>
-            <li><a href="../main_pages/news.php" class="<?php echo $page == 'news' ? 'active' : ''; ?>">Aktualności</a></li>
-            <li><a href="../main_pages/failures.php" class="<?php echo $page == 'failures' ? 'active' : ''; ?>">Awarie</a></li>
-            <li><a href="../main_pages/memes.php" class="<?php echo $page == 'memes' ? 'active' : ''; ?>">Memy</a></li>
-            <li><a href="../dynamic_pages/authors.php" class="<?php echo $page == 'authors' ? 'active' : ''; ?>">Autorzy</a></li>
+            <li><a href="/portal/index.php" class="<?php echo $page == 'index' ? 'active' : ''; ?>">Strona główna</a></li>
+            <li><a href="/portal/news.php" class="<?php echo $page == 'news' ? 'active' : ''; ?>">Aktualności</a></li>
+            <li><a href="/portal/failures.php" class="<?php echo $page == 'failures' ? 'active' : ''; ?>">Awarie</a></li>
+            <li><a href="/portal/memes.php" class="<?php echo $page == 'memes' ? 'active' : ''; ?>">Memy</a></li>
+            <li><a href="/portal/authors.php" class="<?php echo $page == 'authors' ? 'active' : ''; ?>">Autorzy</a></li>
         </ul>
+
+
     </nav>
 </header>
 <main>

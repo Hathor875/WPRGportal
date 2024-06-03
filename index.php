@@ -1,6 +1,6 @@
 <?php
 include 'thumbnail_generator.php';
-include 'header.php';
+include 'layout/header.php';
 ?>
 
 <?php
@@ -34,5 +34,5 @@ $conn->close();
 ?>
 
 <?php
-include 'footer.php';
+include 'layout/footer.php';
 ?>

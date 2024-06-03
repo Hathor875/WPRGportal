@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 }
 ?>
 
-<?php include 'header.php'; ?>
+<?php include 'layout/header.php'; ?>
 
 <main>
     <div class="article-container">
@@ -48,4 +48,4 @@ if ($conn->connect_error) {
     </div>
 </main>
 
-<?php include 'footer.php'; ?>
+<?php include 'layout/footer.php'; ?>
