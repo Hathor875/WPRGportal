@@ -1,12 +1,14 @@
 <?php
+include 'DatabaseHandle/Database.php';
 include 'thumbnail_generator.php';
-include 'db_connect.php';
+
+$db = new Database();
 
 $sql = "SELECT * FROM articles WHERE category = 'failures' ORDER BY created_at DESC";
+$result = $db->query($sql);
 
-$result = $conn->query($sql);
 if (!$result) {
-    die("Error in SQL query: " . $conn->error);
+    die("Error in SQL query: " . $db->conn->error);
 }
 ?>
 
@@ -27,5 +29,5 @@ if (!$result) {
 <?php include 'layout/footer.php'; ?>
 
 <?php
-$conn->close();
+$db->close();
 ?>

@@ -1,7 +1,9 @@
 <?php
-include 'db_connect.php';
+include '../DatabaseHandle/Database.php';
 
-function getPageDetails($page, $conn) {
+$db = new Database();
+
+function getPageDetails($page, $db) {
     $pages = [
         'index' => ['title' => 'Strona główna', 'header' => 'Witamy na stronie głównej'],
         'news' => ['title' => 'Aktualności', 'header' => 'Najnowsze wiadomości'],
@@ -12,7 +14,7 @@ function getPageDetails($page, $conn) {
 
     if ($page == 'article' && isset($_GET['id'])) {
         $articleId = intval($_GET['id']);
-        $article = getArticleDetails($articleId, $conn);
+        $article = getArticleDetails($articleId, $db);
 
         if ($article) {
             return ['title' => $article['title'], 'header' => $article['title']];
@@ -20,14 +22,14 @@ function getPageDetails($page, $conn) {
     }
 
     if (array_key_exists($page, $pages)) {
-        return ['title' => $pages[$page]['title'], 'header' => $pages[$page]['title']];
+        return ['title' => $pages[$page]['title'], 'header' => $pages[$page]['header']];
     }
 
     return ['title' => 'Strona', 'header' => ''];
 }
 
-function getArticleDetails($id, $conn) {
-    $stmt = $conn->prepare("SELECT title FROM articles WHERE id = ?");
+function getArticleDetails($id, $db) {
+    $stmt = $db->conn->prepare("SELECT title FROM articles WHERE id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -40,7 +42,7 @@ function getArticleDetails($id, $conn) {
 }
 
 $page = basename($_SERVER['PHP_SELF'], ".php");
-$pageDetails = getPageDetails($page, $conn);
+$pageDetails = getPageDetails($page, $db);
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -48,7 +50,7 @@ $pageDetails = getPageDetails($page, $conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageDetails['title']; ?> - Serwis Informacyjny</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/portal/css/style.css">
 </head>
 <body>
 <header>
@@ -66,7 +68,6 @@ $pageDetails = getPageDetails($page, $conn);
 <main>
     <h2><?php echo $pageDetails['header']; ?></h2>
     <div class="article-container">
-        <!-- Content here -->
     </div>
 </main>
 </body>

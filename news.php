@@ -1,14 +1,13 @@
 <?php
-include 'db_connect.php';
 include 'thumbnail_generator.php';
+
+include 'DatabaseHandle/Database.php';
+
 include 'layout/header.php';
+$db = new Database();
 
 $sql = "SELECT * FROM articles WHERE category = 'news' ORDER BY created_at DESC LIMIT 25";
-$result = $conn->query($sql);
-
-if (!$result) {
-    die("Error in SQL query: " . $conn->error);
-}
+$result = $db->query($sql);
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -18,7 +17,7 @@ if ($result->num_rows > 0) {
     echo "<p>Brak wiadomości do wyświetlenia.</p>";
 }
 
-$conn->close();
+$db->close();
 
 include 'layout/footer.php';
-?>
+

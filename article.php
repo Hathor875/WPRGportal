@@ -1,18 +1,20 @@
 <?php
-include 'db_connect.php';
+include 'DatabaseHandle/Database.php';
+
+$db = new Database();
 
 if (isset($_GET['id'])) {
-    $article_id = $_GET['id'];
+    $article_id = intval($_GET['id']);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['nickname']) && isset($_POST['comment'])) {
-        $nickname = $conn->real_escape_string($_POST['nickname']);
-        $comment = $conn->real_escape_string($_POST['comment']);
+        $nickname = $db->conn->real_escape_string($_POST['nickname']);
+        $comment = $db->conn->real_escape_string($_POST['comment']);
         $sql_insert_comment = "INSERT INTO comments (article_id, nickname, content) VALUES ('$article_id', '$nickname', '$comment')";
-        $conn->query($sql_insert_comment);
+        $db->query($sql_insert_comment);
     }
 
     $sql = "SELECT * FROM articles WHERE id='$article_id'";
-    $result = $conn->query($sql);
+    $result = $db->query($sql);
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -25,8 +27,8 @@ if (isset($_GET['id'])) {
     $sql_images = "SELECT images.image_url FROM images 
                    JOIN articles_images ON images.id = articles_images.image_id 
                    WHERE articles_images.article_id='$article_id'
-                   ORDER BY images.id ASC";
-    $result_images = $conn->query($sql_images);
+                   ORDER BY images.id ";
+    $result_images = $db->query($sql_images);
     if ($result_images->num_rows > 0) {
         while ($image_row = $result_images->fetch_assoc()) {
             $images[] = $image_row['image_url'];
@@ -36,14 +38,14 @@ if (isset($_GET['id'])) {
     $full_content = isset($_GET['full']) && $_GET['full'] == 'true';
 
     $sql_comments = "SELECT * FROM comments WHERE article_id='$article_id' ORDER BY created_at DESC";
-    $comments_result = $conn->query($sql_comments);
+    $comments_result = $db->query($sql_comments);
 
 } else {
     echo "Brak ID artykułu w URL.";
     exit();
 }
 
-$conn->close();
+$db->close();
 ?>
 
 <!DOCTYPE html>
@@ -67,9 +69,6 @@ $conn->close();
 
             if ($full_content) {
                 echo nl2br(htmlspecialchars($row["content"]));
-                for ($i = 1; $i < count($images); $i++) {
-                    echo '<img src="' . htmlspecialchars($images[$i]) . '" alt="Article Image" class="article-image">';
-                }
             } else {
                 $content = nl2br(htmlspecialchars($row["content"]));
                 $content_lines = explode("<br />", $content);
@@ -85,9 +84,9 @@ $conn->close();
                 } else {
                     echo nl2br(htmlspecialchars($row["content"]));
                 }
-                for ($i = 1; $i < count($images); $i++) {
-                    echo '<img src="' . htmlspecialchars($images[$i]) . '" alt="Article Image" class="article-image">';
-                }
+            }
+            for ($i = 1; $i < count($images); $i++) {
+                echo '<img src="' . htmlspecialchars($images[$i]) . '" alt="Article Image" class="article-image">';
             }
             ?>
         </section>

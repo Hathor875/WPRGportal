@@ -1,14 +1,12 @@
 <?php
-include 'db_connect.php';
+include 'DatabaseHandle/Database.php';
 include 'thumbnail_generator.php';
 include 'layout/header.php';
 
-$sql = "SELECT * FROM articles ORDER BY created_at DESC";
-$result = $conn->query($sql);
+$db = new Database();
 
-if (!$result) {
-    die("Error in SQL query: " . $conn->error);
-}
+$sql = "SELECT * FROM articles ORDER BY created_at DESC";
+$result = $db->query($sql);
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -18,7 +16,9 @@ if ($result->num_rows > 0) {
     echo "<p>Brak wiadomości do wyświetlenia.</p>";
 }
 
-$conn->close();
+$db->close();
+?>
 
+<?php
 include 'layout/footer.php';
 ?>

@@ -1,23 +1,26 @@
 <?php
-include 'db_connect.php';
+include 'DatabaseHandle/Database.php';
 include 'thumbnail_generator.php';
-include 'layout/header.php';
+
+$db = new Database();
 
 $sql = "SELECT * FROM authors ORDER BY name";
-$result = $conn->query($sql);
+$result = $db->query($sql);
 
 if (!$result) {
-    die("Error in SQL query: " . $conn->error);
+    die("Error in SQL query: " . $db->conn->error);
 }
 ?>
+
+<?php include 'layout/header.php'; ?>
 
 <main>
     <div class="author-container">
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo "<a href='author_articles.php?author_id={$row["id"]}'>";
-                echo generateAuthorThumbnail($row["name"], $row["email"], $row["id"]);
+                echo "<a href='author_articles.php?author_id=" . htmlspecialchars($row["id"]) . "'>";
+                echo generateAuthorThumbnail($row["name"], $row["email"]);
                 echo "</a>";
             }
         } else {
@@ -30,5 +33,5 @@ if (!$result) {
 <?php include 'layout/footer.php'; ?>
 
 <?php
-$conn->close();
+$db->close();
 ?>

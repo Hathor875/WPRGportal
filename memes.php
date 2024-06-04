@@ -1,15 +1,15 @@
 <?php
-include 'db_connect.php';
+include 'DatabaseHandle/Database.php';
 include 'thumbnail_generator.php';
-include 'layout/header.php';
+
+$db = new Database();
 
 $sql = "SELECT * FROM articles WHERE category = 'memes' ORDER BY created_at DESC";
-$result = $conn->query($sql);
+$result = $db->query($sql);
 
-if (!$result) {
-    die("Error in SQL query: " . $conn->error);
-}
 ?>
+
+<?php include 'layout/header.php'; ?>
 
 <div class="article-container">
     <?php
@@ -26,5 +26,6 @@ if (!$result) {
 <?php include 'layout/footer.php'; ?>
 
 <?php
-$conn->close();
+$db->close();
 ?>
+
