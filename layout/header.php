@@ -1,5 +1,6 @@
 <?php
 include '../DatabaseHandle/Database.php';
+session_start();
 
 $db = new Database();
 
@@ -62,6 +63,12 @@ $pageDetails = getPageDetails($page, $db);
             <li><a href="/portal/failures.php" class="<?php echo $page == 'failures' ? 'active' : ''; ?>">Awarie</a></li>
             <li><a href="/portal/memes.php" class="<?php echo $page == 'memes' ? 'active' : ''; ?>">Memy</a></li>
             <li><a href="/portal/authors.php" class="<?php echo $page == 'authors' ? 'active' : ''; ?>">Autorzy</a></li>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <li><a href="/portal/admin_panel.php">Admin Panel</a></li>
+                <li><a href="/portal/logout.php">Logout</a></li>
+            <?php else: ?>
+                <li><a href="/portal/login.php">Login</a></li>
+            <?php endif; ?>
         </ul>
     </nav>
 </header>
