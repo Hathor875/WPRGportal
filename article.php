@@ -115,8 +115,8 @@ $db->close();
                 <textarea id="comment" name="comment" rows="4" required></textarea>
                 <br>
                 <button type="submit">Dodaj komentarz</button>
+                <button type="reset">Resetuj</button>
             </form>
-        </section>
     </article>
 </main>
 
