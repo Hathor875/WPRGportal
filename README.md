@@ -15,4 +15,4 @@ Images are also hosted on the same server, while the database resides in a separ
 - Alpine Linux
 
 ### Acknowledgements:
-Special thanks to [College/University Name] for providing the opportunity to work on this project as part of the programming workshops curriculum.
+Special thanks to [PJATK] for providing the opportunity to work on this project as part of the programming workshops curriculum.

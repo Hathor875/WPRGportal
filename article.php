@@ -11,6 +11,10 @@ if (isset($_GET['id'])) {
         $comment = $db->conn->real_escape_string($_POST['comment']);
         $sql_insert_comment = "INSERT INTO comments (article_id, nickname, content) VALUES ('$article_id', '$nickname', '$comment')";
         $db->query($sql_insert_comment);
+
+        // Redirect to prevent form resubmission
+        header("Location: ?id=$article_id");
+        exit();
     }
 
     $sql = "SELECT * FROM articles WHERE id='$article_id'";
@@ -27,7 +31,7 @@ if (isset($_GET['id'])) {
     $sql_images = "SELECT images.image_url FROM images 
                    JOIN articles_images ON images.id = articles_images.image_id 
                    WHERE articles_images.article_id='$article_id'
-                   ORDER BY images.id ";
+                   ORDER BY images.id";
     $result_images = $db->query($sql_images);
     if ($result_images->num_rows > 0) {
         while ($image_row = $result_images->fetch_assoc()) {
